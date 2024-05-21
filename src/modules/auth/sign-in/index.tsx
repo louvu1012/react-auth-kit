@@ -1,26 +1,13 @@
 import { FC } from "react";
-// import { useAuth } from "../../../hook/useAuth";
-// import { authService } from "../../../hook/useAuth";
-// import { signIn } from "../../../contexts/auth/reducers";
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
 const SignIn: FC = () => {
-  // const { dispatch } = useAuth();
-
-  // async function handleSignIn() {
-  //   try {
-  //     const { accessToken, user } = await authService.signIn();
-  //     localStorage.setItem('ACCESS_TOKEN', accessToken);
-  //     dispatch(signIn({ user }));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
+  const signOut = useSignOut();
   const signIn = useSignIn();
-  const auth = useAuthUser()
-  const onSubmit = (e: any) => {
+  const authUser = useAuthUser();
+  const onSubmit = () => {
     if (signIn({
       auth: {
         token: 'ey....mA',
@@ -30,21 +17,23 @@ const SignIn: FC = () => {
       userState: {
         name: 'React User',
         uid: 123456
-      }
+      },
     })) {
       // Redirect or do-something
+      console.log(authUser)
     } else {
       //Throw error
     }
   }
 
-  const handle = () => console.log(auth)
+  const handle = () => console.log(authUser)
 
   return (
     <>
       <div>Sign In</div>
       <button onClick={onSubmit}>Login</button>
       <button onClick={handle}>Handle</button>
+      <button onClick={() => signOut()}>Sign out</button>
     </>
   );
 };
