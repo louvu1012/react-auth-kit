@@ -1,22 +1,13 @@
 import { FC } from "react";
-// import { useAuth } from "../../../../hook/useAuth";
-// import { signOut } from "../../../../contexts/auth/reducers";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UserList: FC = () => {
-  // const { dispatch } = useAuth();
-  
-  // async function handleSignOut() {
-  //   try {
-  //     dispatch(signOut());
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  const { logout } = useAuth0();
 
   return (
     <>
       <div>User List</div>
-      {/* <button onClick={handleSignOut}>Logout</button> */}
+      <button onClick={() => logout()}>Logout</button>
     </>
   );
 };

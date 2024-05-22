@@ -3,24 +3,11 @@ import SignIn from "./auth/sign-in";
 import UserList from "./dashboard/user/list";
 import UserEdit from "./dashboard/user/edit";
 import { FC } from "react";
-// import GuestGuard from "../guards/GuestGuard";
-// import AuthGuard from "../guards/AuthGuard";
+import GuestGuard from "../guards/GuestGuard";
+import AuthGuard from "../guards/AuthGuard";
 
 const Router: FC = () => {
   return useRoutes([
-    {
-      path: 'auth',
-      children: [
-        {
-          path: 'sign-in',
-          element: (
-            // <GuestGuard>
-              <SignIn />
-            // </GuestGuard>
-          ),
-        },
-      ],
-    },
     {
       path: 'dashboard',
       children: [
@@ -38,23 +25,45 @@ const Router: FC = () => {
             {
               path: 'list',
               element: (
-                // <AuthGuard>
+                <AuthGuard>
                   <UserList />
-                // </AuthGuard>
+                </AuthGuard>
               ),
             },
             {
               path: 'edit',
               element: (
-                // <AuthGuard>
+                <AuthGuard>
                   <UserEdit />
-                // </AuthGuard>
+                </AuthGuard>
               ),
             },
           ],
         },
       ],
     },
+    {
+      path: 'auth',
+      children: [
+        {
+          path: 'sign-in',
+          element: (
+            <GuestGuard>
+              <SignIn />
+            </GuestGuard>
+          ),
+        },
+      ],
+    },
+    // Route cuối cùng sẽ chuyển hướng về trang đăng nhập khi không khớp với bất kỳ route nào trong ứng dụng
+    {
+      path: '*',
+      element: (
+        <GuestGuard>
+          <SignIn />
+        </GuestGuard>
+      ),
+    }
   ]);
 };
 
